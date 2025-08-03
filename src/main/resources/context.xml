@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5433/it_academy"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="postgres"/>
+    </bean>
+
+    <bean id="userStorageSQL" class="by.it_academy.jd2.storage.UserStorageSQL">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="userStorageRam" class="by.it_academy.jd2.storage.UserStorageRam" />
+
+    <bean id="voteStorage" class="by.it_academy.jd2.storage.UserStorage">
+        <constructor-arg name="storage">
+            <util:map>
+                <entry key="#{T(by.it_academy.jd2.storage.api.EVoteStorageType).SQL}" value-ref="userStorageSQL"/>
+                <entry key="#{T(by.it_academy.jd2.storage.api.EVoteStorageType).RAM}" value-ref="userStorageRam"/>
+            </util:map>
+        </constructor-arg>
+        <constructor-arg name="defaultFeature" value="#{T(by.it_academy.jd2.service.api.EFeature).STORAGE_TYPE}" />
+    </bean>
+
+    <bean id="messageStorageSQL" class="by.it_academy.jd2.storage.MessageStorageSQL">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="messageStorageRam" class="by.it_academy.jd2.storage.MessageStorageRam" />
+
+    <bean id="messageStorage" class="by.it_academy.jd2.storage.MessageStorage">
+        <constructor-arg name="storage">
+            <util:map>
+                <entry key="#{T(by.it_academy.jd2.storage.api.EVoteStorageType).SQL}" value-ref="messageStorageSQL"/>
+                <entry key="#{T(by.it_academy.jd2.storage.api.EVoteStorageType).RAM}" value-ref="messageStorageRam"/>
+            </util:map>
+        </constructor-arg>
+        <constructor-arg name="defaultFeature" value="#{T(by.it_academy.jd2.service.api.EFeature).STORAGE_TYPE}" />
+    </bean>
+
+    <bean id="userService" class="by.it_academy.jd2.service.UserService">
+        <constructor-arg name="userStorageSQL" ref="userStorageSQL"/>
+    </bean>
+
+    <bean id="messageService" class="by.it_academy.jd2.service.MessageService">
+        <constructor-arg name="messageStorageSQL" ref="messageStorageSQL"/>
+    </bean>
+
+    <bean id="statisticService" class="by.it_academy.jd2.service.StatisticsService">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="messageService" ref="messageService"/>
+    </bean>
+
+</beans>

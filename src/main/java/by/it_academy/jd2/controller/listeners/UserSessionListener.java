@@ -13,18 +13,12 @@ public class UserSessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        Object user = se.getSession().getAttribute("user");
-        if (user != null) {
-            activeUserSessions.incrementAndGet();
-        }
+        activeUserSessions.incrementAndGet();
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        Object user = se.getSession().getAttribute("user");
-        if (user != null) {
-            activeUserSessions.decrementAndGet();
-        }
+        activeUserSessions.decrementAndGet();
     }
 
     public static int getActiveUserCount() {

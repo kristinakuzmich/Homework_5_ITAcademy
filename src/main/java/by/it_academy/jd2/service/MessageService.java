@@ -25,4 +25,8 @@ public class MessageService implements IMessageService {
     public void saveMessage(Message message) {
         storage.add(message);
     }
+
+    public int countMessages(){
+        return storage.countMessages();
+    }
 }

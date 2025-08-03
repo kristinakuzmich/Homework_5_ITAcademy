@@ -1,7 +1,8 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.core.ContextFactory;
 import by.it_academy.jd2.dto.*;
-import by.it_academy.jd2.service.ServiceFactory;
+import by.it_academy.jd2.service.MessageService;
 import by.it_academy.jd2.service.api.IMessageService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ import static java.time.LocalDateTime.now;
 @WebServlet("/api/message")
 public class MessageServlet extends HttpServlet {
 
-    private final IMessageService messageService = ServiceFactory.getMessageService();
+    private final IMessageService messageService = ContextFactory.getBean(MessageService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,7 +73,7 @@ public class MessageServlet extends HttpServlet {
             messageService.saveMessage(message);
             response.setStatus(HttpServletResponse.SC_OK);
             session.setAttribute("to", to);
-            response.sendRedirect(request.getContextPath() + "/index");
+            response.sendRedirect(request.getContextPath() + "/ui/");
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

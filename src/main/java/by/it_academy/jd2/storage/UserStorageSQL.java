@@ -59,7 +59,7 @@ public class UserStorageSQL implements IUserStorage {
                         .build());
             }
         } catch (Exception e){
-            throw new StorageException("Ошибка получения данных о голосах", e);
+            throw new StorageException("Ошибка получения данных о пользователях", e);
         }
         return results;
     }
@@ -67,9 +67,7 @@ public class UserStorageSQL implements IUserStorage {
     @Override
     public int countUsers() {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement("""
-        String sql = "SELECT COUNT(*) FROM users_app.users";
-        """);
+             PreparedStatement statement = conn.prepareStatement("SELECT COUNT(*) FROM users_app.users");
          ResultSet resultSet = statement.executeQuery();) {
         while (resultSet.next()) {
             return resultSet.getInt(1);

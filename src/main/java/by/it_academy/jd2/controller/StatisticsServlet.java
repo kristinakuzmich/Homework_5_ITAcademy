@@ -1,7 +1,7 @@
 package by.it_academy.jd2.controller;
 
-import by.it_academy.jd2.controller.listeners.UserSessionListener;
-import by.it_academy.jd2.service.api.Statistics;
+import by.it_academy.jd2.core.ContextFactory;
+import by.it_academy.jd2.service.api.IStatService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,12 +13,15 @@ import java.util.Map;
 
 @WebServlet("/api/admin/statistics")
 public class StatisticsServlet extends HttpServlet {
+
+    private static final IStatService statService = ContextFactory.getBean(IStatService.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("activeUsers", UserSessionListener.getActiveUserCount());
-        stats.put("totalRegisteredUsers", Statistics.getTotalUsers());
-        stats.put("totalSentMessages", Statistics.getTotalMessages());
+        stats.put("activeUsers", statService.getActiveUsers());
+        stats.put("totalRegisteredUsers", statService.getTotalUsers());
+        stats.put("totalSentMessages", statService.getTotalMessages());
 
         resp.setStatus(HttpServletResponse.SC_OK);
         req.setAttribute("stats", stats);

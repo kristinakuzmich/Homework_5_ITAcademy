@@ -23,4 +23,8 @@ public class UserService implements IUserService {
                 .filter(u -> u.getLogin().equals(login) && u.getPassword().equals(password))
                 .findFirst().orElse(null);
     }
+
+    public int countUsers() {
+        return storage.countUsers();
+    }
 }

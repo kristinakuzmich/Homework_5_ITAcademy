@@ -5,7 +5,7 @@
 <head>
     <title>Главная страница</title>
     <style>
-        <%@include file='ui/styles/index.css' %>
+        <%@include file='styles/index.css' %>
     </style>
 </head>
 <body>

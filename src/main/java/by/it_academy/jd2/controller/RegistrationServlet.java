@@ -1,10 +1,12 @@
 package by.it_academy.jd2.controller;
 
+import by.it_academy.jd2.core.ContextFactory;
 import by.it_academy.jd2.dto.User;
 import by.it_academy.jd2.dto.UserRole;
-import by.it_academy.jd2.service.ServiceFactory;
+import by.it_academy.jd2.service.UserService;
 import by.it_academy.jd2.service.api.IUserService;
-import by.it_academy.jd2.storage.StorageFactory;
+import by.it_academy.jd2.storage.UserStorageSQL;
+import by.it_academy.jd2.storage.api.IUserStorage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,7 +25,8 @@ import static java.time.LocalDateTime.now;
 @WebServlet(urlPatterns = "/api/user")
 public class RegistrationServlet extends HttpServlet {
 
-    private final IUserService service = ServiceFactory.getUserService();
+    private final IUserService service = ContextFactory.getBean(UserService.class);
+    private final IUserStorage storage = ContextFactory.getBean(UserStorageSQL.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
         String birthDateStr = request.getParameter("birthDate");
 
 
-        Optional<User> existing = StorageFactory.getUserStorage().getAll().stream()
+        Optional<User> existing = storage.getAll().stream()
                 .filter(u -> u.getLogin().equals(login))
                 .findFirst();
         if (existing.isPresent()) {
@@ -73,6 +76,6 @@ public class RegistrationServlet extends HttpServlet {
                 .build());
 
         session.setAttribute("register", login);
-        response.sendRedirect(request.getContextPath() + "/index");
+        response.sendRedirect(request.getContextPath() + "/ui/");
     }
 }

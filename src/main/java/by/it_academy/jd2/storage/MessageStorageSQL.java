@@ -67,9 +67,7 @@ public class MessageStorageSQL implements IMessageStorage {
     @Override
     public int countMessages() {
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement("""
-        String sql = "SELECT COUNT(*) FROM users_app.messages";
-        """);
+             PreparedStatement statement = conn.prepareStatement("SELECT COUNT(*) FROM users_app.messages");
              ResultSet resultSet = statement.executeQuery();) {
             while (resultSet.next()) {
                 return resultSet.getInt(1);

@@ -6,7 +6,7 @@
 
     <groupId>by.it_academy.jd2</groupId>
     <artifactId>Homework_4_ITAcademy</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <packaging>war</packaging>
 
     <properties>
@@ -16,54 +16,62 @@
         <maven.tomcat.url>http://localhost:8080/manager/text</maven.tomcat.url>
         <maven.tomcat.server>TomcatServerLocal</maven.tomcat.server>
         <maven.tomcat.path>/${project.build.finalName}</maven.tomcat.path>
+        <servlet.version>6.1.0</servlet.version>
+        <tomcat.version>10.1.18</tomcat.version>
+        <jakarta.version>3.0.2</jakarta.version>
+        <glassfish.version>3.0.1</glassfish.version>
+        <postgresql.version>42.7.7</postgresql.version>
+        <c3p0.version>0.11.2</c3p0.version>
+        <maven.plugin.version>3.4.0</maven.plugin.version>
+        <tomcat7.plugin.version>2.2</tomcat7.plugin.version>
+        <springframework.version>6.2.9</springframework.version>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${springframework.version}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.1.0</version>
+            <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
-            <version>10.1.18</version>
+            <version>${tomcat.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.2</version>
+            <version>${jakarta.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl -->
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>3.0.1</version>
+            <version>${glassfish.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.11.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.13.1</version>
+            <version>${c3p0.version}</version>
         </dependency>
     </dependencies>
 
@@ -72,12 +80,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>${maven.plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${tomcat7.plugin.version}</version>
             </plugin>
         </plugins>
     </build>
